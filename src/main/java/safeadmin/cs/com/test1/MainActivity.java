@@ -2,13 +2,18 @@ package safeadmin.cs.com.test1;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,8 +32,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private ListView mListView;
     private ArrayAdapter<String> marrayAdapter;
     List<String> list = new ArrayList();
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -41,6 +44,25 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             readContacts();
         }
         mListView.setOnItemClickListener(this);
+        Intent intent = new Intent(this, Main2Activity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("标题")
+//                .setContentText("内容--我们的点点滴滴ddddddddd的点点滴滴多多多多多多多多多多多多多多多多多多多多！")
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources() , R.drawable.toast_l))
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(getResources() , R.drawable.toast_l)))
+//                .setStyle(new NotificationCompat.BigTextStyle().bigText("的点点滴滴多多多多多多dddddddddddddddddddddddddddddddd多多多多多多多多多多多多多多的点点滴滴多多多多"))
+//                .setVibrate(new long[]{0 , 1500 , 1000 , 1500})
+//                .setLights(Color.GREEN , 1000 , 1000)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .build();
+        manager.notify(1 , notification);
     }
 
     private void readContacts() {
