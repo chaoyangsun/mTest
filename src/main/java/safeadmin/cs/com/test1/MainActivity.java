@@ -52,7 +52,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                     String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                     String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                     if (number.equals("10086") || number.equals("10086")) {
-                        name = "【" + "10086" + "】";
+                        name = "【" + "移动" + "】";
                         list.add(0 ,name + "\n" + number);
                     }else {
                         list.add(name + "\n" + number);
